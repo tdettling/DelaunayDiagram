@@ -5,17 +5,24 @@
 # An approximation to the Voronoi Diagram
 # This code creates a discrete approximation 
 # to the Voronoi Diagram
-
-const SMALL_SIZE_AREA = 16
+using Base.Threads
+const SMALL_SIZE_AREA = 400
 voronoi = zeros(Int32,SMALL_SIZE_AREA,SMALL_SIZE_AREA)
 
-const NSEEDS_D = 5
-seeds = [1 1;1 SMALL_SIZE_AREA;
+const NSEEDS_D = rand(50:80)
+seeds = Array{Int64}(undef, NSEEDS_D, 2)
+for seed in 1:NSEEDS_D
+    seeds[seed,1] = rand(1:SMALL_SIZE_AREA)
+    seeds[seed,2] = rand(1:SMALL_SIZE_AREA)
+end
+
+ #=    seeds = [1 1;1 SMALL_SIZE_AREA;
     SMALL_SIZE_AREA/2 SMALL_SIZE_AREA/2;
     SMALL_SIZE_AREA 1;
-    SMALL_SIZE_AREA SMALL_SIZE_AREA]
+    SMALL_SIZE_AREA SMALL_SIZE_AREA] =#
 #
-for i in 1:SMALL_SIZE_AREA
+
+@threads for i in 1:SMALL_SIZE_AREA
     for j in 1:SMALL_SIZE_AREA
         shortestDistance = typemax(Int32)
         closestSeed = 0
@@ -94,7 +101,7 @@ using Plots
 gr()
 Plots.heatmap(voronoi)
 
-using GraphRecipes
+#using GraphRecipes
 
-graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
-linecolor = :darkgrey)
+#graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
+#linecolor = :darkgrey)
