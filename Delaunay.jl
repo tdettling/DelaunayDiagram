@@ -5,17 +5,22 @@
 # An approximation to the Voronoi Diagram
 # This code creates a discrete approximation 
 # to the Voronoi Diagram
+using GraphRecipes
+using Plots
+using Base.Threads
 
-const SMALL_SIZE_AREA = 16
+const SMALL_SIZE_AREA = 500
+const NSEEDS_D = rand(5:20)
+
 voronoi = zeros(Int32,SMALL_SIZE_AREA,SMALL_SIZE_AREA)
+seeds = Array{Int64}(undef, NSEEDS_D, 2)
 
-const NSEEDS_D = 5
-seeds = [1 1;1 SMALL_SIZE_AREA;
-    SMALL_SIZE_AREA/2 SMALL_SIZE_AREA/2;
-    SMALL_SIZE_AREA 1;
-    SMALL_SIZE_AREA SMALL_SIZE_AREA]
-#
-for i in 1:SMALL_SIZE_AREA
+for seed in 1:NSEEDS_D
+    seeds[seed,1] = rand(1:SMALL_SIZE_AREA)
+    seeds[seed,2] = rand(1:SMALL_SIZE_AREA)
+end
+
+@threads for i in 1:SMALL_SIZE_AREA
     for j in 1:SMALL_SIZE_AREA
         shortestDistance = typemax(Int32)
         closestSeed = 0
@@ -31,12 +36,9 @@ for i in 1:SMALL_SIZE_AREA
     end
 end
 
-#
 # For every pixel, check if it has neighbor from a different
 # tile
-# 
 # Store the results in an adjacency matrix initialized to 0s
-#
 adjacencyMatrix = zeros(Int32,NSEEDS_D,NSEEDS_D)
 for j in 2:SMALL_SIZE_AREA-1, i in 2:SMALL_SIZE_AREA-1
     # Check the four neighbors (it could be 8 neighbors)
@@ -89,12 +91,13 @@ println(adjacencyMatrix)
 
 # 
 # Using the "seaborn" package to visualize the approximate voronoi Diagram
-#
-using Plots
+
+#********************************************************#
+# Plots package
 gr()
 Plots.heatmap(voronoi)
-
-using GraphRecipes
-
+#********************************************************#
+# GraphRecipes Package
 graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
 linecolor = :darkgrey)
+#********************************************************#
