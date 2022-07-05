@@ -1,11 +1,9 @@
-# 
 # Extracting the adjacency matrix for a set of seeds
 # out of an approximate Voronoi Diagram
 #
 # An approximation to the Voronoi Diagram
 # This code creates a discrete approximation 
 # to the Voronoi Diagram
-<<<<<<< HEAD
 using GraphRecipes
 using Plots
 using Base.Threads
@@ -13,32 +11,24 @@ using Base.Threads
 const SMALL_SIZE_AREA = 500
 const NSEEDS_D = rand(5:20)
 
-=======
-using Base.Threads
-const SMALL_SIZE_AREA = 400
->>>>>>> 3ed2d6b87f454377b62163dbd6f8b90fe64544b8
 voronoi = zeros(Int32,SMALL_SIZE_AREA,SMALL_SIZE_AREA)
 seeds = Array{Int64}(undef, NSEEDS_D, 2)
 
-<<<<<<< HEAD
-=======
 const NSEEDS_D = rand(50:80)
 seeds = Array{Int64}(undef, NSEEDS_D, 2)
->>>>>>> 3ed2d6b87f454377b62163dbd6f8b90fe64544b8
+
 for seed in 1:NSEEDS_D
     seeds[seed,1] = rand(1:SMALL_SIZE_AREA)
     seeds[seed,2] = rand(1:SMALL_SIZE_AREA)
 end
 
-<<<<<<< HEAD
-=======
+
  #=    seeds = [1 1;1 SMALL_SIZE_AREA;
     SMALL_SIZE_AREA/2 SMALL_SIZE_AREA/2;
     SMALL_SIZE_AREA 1;
     SMALL_SIZE_AREA SMALL_SIZE_AREA] =#
 #
 
->>>>>>> 3ed2d6b87f454377b62163dbd6f8b90fe64544b8
 @threads for i in 1:SMALL_SIZE_AREA
     for j in 1:SMALL_SIZE_AREA
         shortestDistance = typemax(Int32)
@@ -115,16 +105,14 @@ println(adjacencyMatrix)
 # Plots package
 gr()
 Plots.heatmap(voronoi)
-<<<<<<< HEAD
 #********************************************************#
 # GraphRecipes Package
 graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
 linecolor = :darkgrey)
 #********************************************************#
-=======
-
-#using GraphRecipes
 
 #graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
 #linecolor = :darkgrey)
->>>>>>> 3ed2d6b87f454377b62163dbd6f8b90fe64544b8
+#testing for some changes
+
+#tester
