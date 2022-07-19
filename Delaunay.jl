@@ -111,8 +111,8 @@ graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
 linecolor = :darkgrey)
 #********************************************************#
 
-#graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
-#linecolor = :darkgrey)
+graphplot(adjacencyMatrix,names=1:NSEEDS_D,fontsize = 10,
+linecolor = :darkgrey)
 #testing for some changes
-
+#testing for more
 #tester
